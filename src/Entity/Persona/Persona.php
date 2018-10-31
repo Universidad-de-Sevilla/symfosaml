@@ -3,13 +3,13 @@
 namespace App\Entity\Persona;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class Persona
  * @ORM\Entity
  * @ORM\Table(name="AA_personas")
  **/
-class Persona
+class Persona implements UserInterface
 {
     /**
      * @ORM\Id
@@ -29,37 +29,13 @@ class Persona
      * @ORM\Column(name="correo1", type="string", unique=TRUE)
      * @var string
      */
-    private $correo1;
-
-    /**
-     * @ORM\Column(name="correo2", type="string")
-     * @var string
-     */
-    private $correo2;
-
-    /**
-     * @ORM\Column(name="creado", type="datetime")
-     * @var \DateTime
-     */
-    private $creado;
+    private $correo;
 
     /**
      * @ORM\Column(name="dni_sin_letra", type="string")
      * @var string
      */
     private $dni;
-
-    /**
-     * @ORM\Column(name="fecha_nacimiento", type="datetime", nullable=TRUE)
-     * @var \DateTime
-     */
-    private $fechaNacimiento;
-
-    /**
-     * @ORM\Column(name="modificado", type="datetime", nullable=TRUE)
-     * @var \DateTime
-     */
-    private $modificado;
 
     /**
      * @ORM\Column(name="nif", type="string")
@@ -74,28 +50,10 @@ class Persona
     private $nombre;
 
     /**
-     * @ORM\Column(name="organizacion", type="string")
-     * @var string
-     */
-    private $organizacion;
-
-    /**
-     * @ORM\Column(name="sexo", type="string")
-     * @var string
-     */
-    private $sexo;
-
-    /**
      * @ORM\Column(name="telefono_trabajo", type="string")
      * @var string
      */
     private $telefonoTrabajo;
-
-    /**
-     * @ORM\Column(name="telefono_domicilio", type="string")
-     * @var string
-     */
-    private $telefonoDomicilio;
 
     /**
      * @ORM\Column(name="telefono_movil", type="string")
@@ -143,49 +101,17 @@ class Persona
     /**
      * @return string
      */
-    public function getCorreo1()
+    public function getCorreo()
     {
-        return $this->correo1;
+        return $this->correo;
     }
 
     /**
-     * @param string $correo1
+     * @param string $correo
      */
-    public function setCorreo1($correo1)
+    public function setCorreo($correo)
     {
-        $this->correo1 = $correo1;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCorreo2()
-    {
-        return $this->correo2;
-    }
-
-    /**
-     * @param string $correo2
-     */
-    public function setCorreo2($correo2)
-    {
-        $this->correo2 = $correo2;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreado()
-    {
-        return $this->creado;
-    }
-
-    /**
-     * @param \DateTime $creado
-     */
-    public function setCreado($creado)
-    {
-        $this->creado = $creado;
+        $this->correo = $correo;
     }
 
     /**
@@ -202,38 +128,6 @@ class Persona
     public function setDni($dni)
     {
         $this->dni = $dni;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getFechaNacimiento()
-    {
-        return $this->fechaNacimiento;
-    }
-
-    /**
-     * @param \DateTime $fechaNacimiento
-     */
-    public function setFechaNacimiento($fechaNacimiento)
-    {
-        $this->fechaNacimiento = $fechaNacimiento;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getModificado()
-    {
-        return $this->modificado;
-    }
-
-    /**
-     * @param \DateTime $modificado
-     */
-    public function setModificado($modificado)
-    {
-        $this->modificado = $modificado;
     }
 
     /**
@@ -271,38 +165,6 @@ class Persona
     /**
      * @return string
      */
-    public function getOrganizacion()
-    {
-        return $this->organizacion;
-    }
-
-    /**
-     * @param string $organizacion
-     */
-    public function setOrganizacion($organizacion)
-    {
-        $this->organizacion = $organizacion;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSexo()
-    {
-        return $this->sexo;
-    }
-
-    /**
-     * @param string $sexo
-     */
-    public function setSexo($sexo)
-    {
-        $this->sexo = $sexo;
-    }
-
-    /**
-     * @return string
-     */
     public function getTelefonoTrabajo()
     {
         return $this->telefonoTrabajo;
@@ -314,22 +176,6 @@ class Persona
     public function setTelefonoTrabajo($telefonoTrabajo)
     {
         $this->telefonoTrabajo = $telefonoTrabajo;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTelefonoDomicilio()
-    {
-        return $this->telefonoDomicilio;
-    }
-
-    /**
-     * @param string $telefonoDomicilio
-     */
-    public function setTelefonoDomicilio($telefonoDomicilio)
-    {
-        $this->telefonoDomicilio = $telefonoDomicilio;
     }
 
     /**
@@ -380,5 +226,68 @@ class Persona
         $this->uvus = $uvus;
     }
 
-}
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return array('ROLE_USER');
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return array()
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
 
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return null;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getUvus();
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+}
