@@ -11,12 +11,19 @@ class DefaultController extends Controller
 {
 
     /**
+     * @Route("/hola", name="hola")
+     */
+    public function hola(){
+        return $this->redirect("http://icasus.us.es");
+    }
+
+    /**
      * @Route("/login", name="login")
      */
     public function login() {
         $target = urlencode($this->container->getParameter('cas_login_target'));
         $url = 'https://'.$this->container->getParameter('cas_host') . $this->container->getParameter('cas_path') . '/login?service=';
-
+        dump($url);
         return $this->redirect($url . $target . '/force');
     }
 
