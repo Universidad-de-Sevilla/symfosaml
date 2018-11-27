@@ -2,6 +2,9 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+lightsaml_sp:
+  resource: "@LightSamlSpBundle/Resources/config/routing.yml"
+  prefix: saml
+
 logout:
   path: /logout
-  defaults: { _controller: 'L3\Bundle\CasBundle\Controller\LogoutController::logoutAction' }

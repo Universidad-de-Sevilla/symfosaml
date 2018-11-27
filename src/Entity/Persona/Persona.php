@@ -50,6 +50,11 @@ class Persona implements UserInterface
     private $nombre;
 
     /**
+     * @var array
+     */
+    private $roles;
+
+    /**
      * @ORM\Column(name="telefono_trabajo", type="string")
      * @var string
      */
@@ -220,10 +225,13 @@ class Persona implements UserInterface
 
     /**
      * @param string $uvus
+     * @return Persona
      */
-    public function setUvus($uvus)
+    public function setUvus(string $uvus) : self
     {
         $this->uvus = $uvus;
+
+        return $this;
     }
 
     /**
@@ -243,6 +251,16 @@ class Persona implements UserInterface
     public function getRoles()
     {
         return array('ROLE_USER');
+    }
+
+    /**
+     * @param array $roles
+     * @return Persona
+     */
+    public function setRoles($roles) : self
+    {
+        $this->roles = $roles;
+        return $this;
     }
 
     /**
@@ -278,6 +296,13 @@ class Persona implements UserInterface
     public function getUsername()
     {
         return $this->getUvus();
+    }
+
+    public function setUsername(string $username) : self
+    {
+        $this->setUvus($username);
+
+        return $this;
     }
 
     /**
